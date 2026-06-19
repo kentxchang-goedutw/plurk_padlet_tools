@@ -2082,7 +2082,7 @@ function deleteBoardData(shareId) {
                 // 互動學生模式
                 newPlurkSection.classList.add('hidden');
                 newWallBtn.classList.add('hidden');
-                styleToggleBtn.classList.add('hidden');
+                // styleToggleBtn 保持顯示，供學生切換風格
                 studentModeBtn.classList.add('hidden');
                 settingBgBtn.classList.add('hidden');
                 helpBtn.classList.add('hidden');
@@ -2092,11 +2092,17 @@ function deleteBoardData(shareId) {
                 exportBtn.classList.add('hidden');
                 importBtn.classList.add('hidden');
                 downloadHtmlBtn.classList.add('hidden');
-            }
 
-            // 只要是學生模式 (互動或唯讀)，就直接隱藏工具列
-            if (isStudentMode) {
-                document.getElementById('modern-toolbar')?.classList.add('hidden');
+                // 右上設定只保留主題切換功能：隱藏工具列展開齒輪，並強制展開工具列選單，此時裡面只會有 styleToggleBtn
+                const toolbarToggleBtn = document.getElementById('toolbar-toggle-btn');
+                const toolbarMenu = document.getElementById('toolbar-menu');
+                if (toolbarToggleBtn) {
+                    toolbarToggleBtn.classList.add('hidden');
+                }
+                if (toolbarMenu) {
+                    toolbarMenu.classList.remove('max-w-[0px]', 'opacity-0', 'pointer-events-none');
+                    toolbarMenu.classList.add('max-w-[900px]', 'opacity-100', 'pointer-events-auto');
+                }
             }
         };
 
@@ -2571,24 +2577,21 @@ function deleteBoardData(shareId) {
                     let shortUrl = '';
                     
                     if (selectedType === 'tinyurl') {
-                        // 使用 allorigins 代理 API 跨過 CORS 阻擋
+                        // 使用 corsproxy.io 代理 API 跨過 CORS 阻擋 (回傳純文字網址)
                         const apiUrl = `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`;
-                        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+                        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
                         const res = await fetch(proxyUrl);
                         if (!res.ok) throw new Error('CORS 代理伺服器連線失敗');
-                        const data = await res.json();
-                        shortUrl = data.contents;
+                        shortUrl = await res.text();
                     } else if (selectedType === 'isgd') {
-                        // 使用 allorigins 代理 API 跨過 CORS 阻擋
+                        // is.gd 本身支援 CORS，直接 fetch 即可，完全不需要代理 (回傳純文字網址)
                         const apiUrl = `https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`;
-                        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
-                        const res = await fetch(proxyUrl);
-                        if (!res.ok) throw new Error('CORS 代理伺服器連線失敗');
-                        const data = await res.json();
-                        shortUrl = data.contents;
+                        const res = await fetch(apiUrl);
+                        if (!res.ok) throw new Error('is.gd 伺服器連線失敗');
+                        shortUrl = await res.text();
                     }
 
-                    if (shortUrl && shortUrl.startsWith('http')) {
+                    if (shortUrl && shortUrl.trim().startsWith('http')) {
                         cachedUrls[selectedType] = shortUrl.trim();
                         studentUrlInput.value = cachedUrls[selectedType];
                         renderStudentQrcode(cachedUrls[selectedType]);
