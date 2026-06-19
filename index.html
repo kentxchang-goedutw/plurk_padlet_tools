@@ -23,7 +23,7 @@
         #main-title-input {
             background: transparent;
             border: 2px dashed transparent;
-            text-align: center;
+            text-align: left;
             outline: none;
             transition: border-color 0.2s;
             color: #333;
@@ -153,10 +153,11 @@
         }
         
         body.padlet-style .section-column {
-            background: transparent;
-            border-radius: 12px;
-            border: none;
-            box-shadow: none;
+            background: rgba(248, 250, 252, 0.65); /* 整個區塊淡色底色 (Slate 50 半透明) */
+            backdrop-filter: blur(10px);
+            border-radius: 16px; /* 整個區塊大圓角 */
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             width: 320px;
             min-width: 320px;
             max-width: 320px;
@@ -164,29 +165,30 @@
             margin-top: 0 !important;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             flex-shrink: 0;
+            overflow: hidden; /* 這能自動裁剪子元素，確保最底部也有圓角 */
         }
         
         body.padlet-style .section-column:hover {
-            transform: none;
-            box-shadow: none;
+            transform: translateY(-2px); /* 加一點浮動 hover 效果 */
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
         
         body.padlet-style .section-header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            border-radius: 12px 12px 0 0;
+            background: rgba(255, 255, 255, 0.85); /* 讓標頭稍微亮一點 (純白半透明) */
+            color: #0f172a; /* 黑色/深色文字 (Slate 900) */
             padding: 1.5rem;
-            border-bottom: none;
+            border-bottom: 1px solid #e2e8f0; /* 只要下邊框，外框由 column 提供 */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
         }
         
         body.padlet-style .section-title-input {
-            color: white;
-            font-weight: 600;
+            color: #0f172a; /* 黑色/深色文字 (Slate 900) */
+            font-weight: 700;
             font-size: 1.1rem;
         }
         
         body.padlet-style .section-title-input::placeholder {
-            color: rgba(255,255,255,0.8);
+            color: #94a3b8; /* 淡灰色 placeholder */
         }
         
         body.padlet-style .section-posts {
@@ -309,8 +311,8 @@
         body.padlet-style .expand-responses-btn,
         body.padlet-style .image-toggle-btn,
         body.padlet-style .delete-section-btn {
-            color: rgba(255,255,255,0.8) !important;
-            background: rgba(255,255,255,0.1);
+            color: #64748b !important; /* 淡色背景配深灰文字 (Slate 500) */
+            background: #f1f5f9; /* 淡灰背景 (Slate 100) */
             border-radius: 6px;
             transition: all 0.2s ease;
         }
@@ -318,8 +320,8 @@
         body.padlet-style .expand-responses-btn:hover,
         body.padlet-style .image-toggle-btn:hover,
         body.padlet-style .delete-section-btn:hover {
-            background: rgba(255,255,255,0.2);
-            color: white !important;
+            background: #e2e8f0; /* Hover 稍微變深 (Slate 200) */
+            color: #0f172a !important; /* 文字變深黑 (Slate 900) */
         }
         
         /* Plurk風格下隱藏中間的新增回應按鈕，只保留底部按鈕 */
@@ -357,7 +359,7 @@
                     <div id="style-toggle-icon" class="flex items-center justify-center">
                         <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
                     </div>
-                    <span class="text-[9px] mt-1 font-bold">風格切換</span>
+                    <span class="text-[11px] leading-none mt-0.5 font-bold text-center">風格<br>切換</span>
                 </button>
                 <button id="save-btn" class="flex flex-col items-center justify-center w-14 h-14 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-xl transition-all duration-200 theme-button" title="分享看板到 GAS 試算表">
                     <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l4.632-2.316m0 0a3 3 0 10-2.684-1.342 3 3 0 002.684 1.342zm0 0l-4.632 2.316m0 0a3 3 0 101.897 4.7l4.632-2.316m-4.632 2.316a3 3 0 11-1.897-4.7zm0 0H12"/></svg>
@@ -393,20 +395,21 @@
                 </button>
             </div>
             
-            <button id="toolbar-toggle-btn" class="flex flex-col items-center justify-center w-14 h-14 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-xl transition-all duration-300 focus:outline-none" title="展開/收合工具列">
+            <button id="toolbar-toggle-btn" class="flex items-center justify-center w-14 h-14 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-xl transition-all duration-300 focus:outline-none" title="展開/收合工具列">
                 <div class="flex items-center justify-center">
-                    <svg id="toggle-icon-gear" class="w-5.5 h-5.5 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    <svg id="toggle-icon-close" class="w-5.5 h-5.5 hidden transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                    <!-- 收合狀態：顯示向左圖示，指引可以往左展開 -->
+                    <svg id="toggle-icon-gear" class="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+                    <!-- 展開狀態：顯示向右圖示，指引可以往右收合 -->
+                    <svg id="toggle-icon-close" class="w-6 h-6 hidden transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
                 </div>
-                <span id="toggle-btn-text" class="text-[9px] mt-1 font-bold">選單</span>
             </button>
         </div>
     </div>
     
-    <!-- 頂部控制列 (三欄式呈現) -->
+    <!-- 頂部控制列 (三欄式呈現，左側標題佔2/3，右側新增區區佔1/3) -->
     <header class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center w-full px-6 py-4 flex-shrink-0 border-b border-gray-200 bg-white bg-opacity-70 backdrop-blur-md">
-        <!-- 左方欄：標題與狀態指示 -->
-        <div class="flex flex-col text-left">
+        <!-- 左方欄：標題與狀態指示 (最大可佔三分之二寬) -->
+        <div class="flex flex-col text-left md:col-span-2">
             <input id="main-title-input" type="text" class="font-theme-title text-3xl sm:text-4xl w-full bg-transparent focus:outline-none focus:ring-0">
             
             <!-- 狀態指示列 -->
@@ -422,11 +425,8 @@
             </div>
         </div>
         
-        <!-- 中間欄：新增噗文輸入區佔位符 (Padlet風格時會被移入) -->
-        <div id="new-plurk-header-container" class="w-full"></div>
-        
-        <!-- 右方欄：留空 -->
-        <div class="hidden md:block"></div>
+        <!-- 右方欄：新增區段輸入區佔位符 (風格二時會被移入，佔三分之一寬) -->
+        <div id="new-plurk-header-container" class="w-full md:col-span-1"></div>
     </header>
 
     <!-- 牆面容器 (河道) -->
@@ -525,7 +525,7 @@
     </div>
 
     <!-- 自訂確認視窗 -->
-    <div id="confirm-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div id="confirm-modal" class="modal-backdrop fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
         <div class="modal-content bg-white w-full max-w-sm rounded-lg p-6 relative">
             <h3 id="confirm-title" class="text-lg font-bold text-gray-900 mb-4">確認操作</h3>
             <p id="confirm-message" class="text-gray-700 mb-6">您確定要執行此操作嗎？</p>
@@ -707,6 +707,23 @@ const firebaseConfig = {
                 
                 <!-- Tab 2: GAS -->
                 <div id="tab-content-gas" class="space-y-4 hidden">
+                    <!-- GAS Web App URL 設定面板 -->
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-5 mb-6 shadow-sm">
+                        <h4 class="font-bold text-lg text-blue-800 mb-2 flex items-center gap-1.5">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            本機設定 Google Apps Script (GAS) 網址
+                        </h4>
+                        <p class="text-sm text-gray-600 mb-3">請在下方輸入框貼上您從 Google 試算表部署的「網頁應用程式網址」 (Web App URL)，系統會將其記錄在本機瀏覽器中，日後點擊分享按鈕即可直接上傳！</p>
+                        
+                        <input type="url" id="web-gasurl-input" class="w-full p-3 bg-white border border-gray-300 rounded-md font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3" placeholder="https://script.google.com/macros/s/.../exec">
+                        
+                        <div class="flex flex-wrap items-center gap-3">
+                            <button id="save-web-gasurl-btn" class="theme-button bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg text-sm transition-all shadow-sm">儲存 GAS 網址</button>
+                            <button id="clear-web-gasurl-btn" class="theme-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg text-sm transition-all">清除設定</button>
+                            <span id="web-gasurl-status" class="text-sm font-bold text-green-600 hidden">✓ 設定已儲存，網頁即將重載！</span>
+                        </div>
+                    </div>
+
                     <p class="mb-4">藉由本設定，您可以將互動結束後的看板資料永久備份儲存至您的 Google 試算表中，並產生一個精美、唯讀的分享連結。</p>
                     
                     <h3 class="font-bold text-lg mb-2 mt-4 text-orange-600">步驟一：建立 Google 試算表</h3>
@@ -731,7 +748,7 @@ const firebaseConfig = {
                     <ol class="list-decimal list-inside space-y-2 mb-4 pl-4">
                         <li>點擊右上角的「部署」 > 「新增部署」。</li>
                         <li>在彈出的視窗中，點選左上角「選取類型 (齒輪)」 > 「網頁應用程式 (Web App)」。</li>
-                        <li>在「說明」欄位輸入簡短的文字，例如：`v1`。</li>
+                        <li>在「說明」欄位輸入簡慢的文字，例如：`v1`。</li>
                         <li>將「誰可以存取 (Who has access)」設定為「<strong>任何人 (Anyone)</strong>」（注意：請勿選取「僅限自己」，否則外部學生網頁將無法寫入或讀取資料）。</li>
                         <li>點擊下方的「部署」按鈕。</li>
                     </ol>
@@ -743,10 +760,10 @@ const firebaseConfig = {
                         <li>若出現「Google 尚未驗證此應用程式」警告，請點選左下角的「**進階 (Advanced)**」 > 「**前往「未命名專案」 (安全起見，繼續)**」，然後點選「允許 (Allow)」。</li>
                     </ol>
 
-                    <h3 class="font-bold text-lg mb-2 mt-4 text-orange-600">步驟六：複製部署網址並填入網頁中</h3>
+                    <h3 class="font-bold text-lg mb-2 mt-4 text-orange-600">步驟六：複製部署網址並填入設定中</h3>
                     <ol class="list-decimal list-inside space-y-2 mb-4 pl-4">
                         <li>部署完成後，請複製畫面上顯示的「**網頁應用程式網址** (網址以 <code>/exec</code> 結尾)」。</li>
-                        <li>回到此回應牆，點擊右上角的「分享 🔗」按鈕，將剛才複製的網址貼入輸入框中。系統會將此網址記在本機，以後按下分享即可自動轉存！</li>
+                        <li>回到此回應牆，將剛才複製的網址，貼入上方「**本機設定 Google Apps Script (GAS) 網址**」輸入框中並點擊「儲存 GAS 網址」儲存。系統會將此網址記在本機，以後按下分享即可自動轉存！</li>
                     </ol>
                     
                     <p class="mt-2 p-3 bg-green-100 border-l-4 border-green-500 text-green-700 rounded-md">
@@ -773,6 +790,16 @@ function doGet(e) {
   
   if (action === "read" && shareId) {
     return ContentService.createTextOutput(JSON.stringify(readBoardData(shareId)))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  if (action === "list") {
+    return ContentService.createTextOutput(JSON.stringify(listBoardsData()))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  if (action === "delete" && shareId) {
+    return ContentService.createTextOutput(JSON.stringify(deleteBoardData(shareId)))
                          .setMimeType(ContentService.MimeType.JSON);
   }
   
@@ -815,8 +842,8 @@ function initSheets() {
   var sectionSheet = ss.getSheetByName("噗文清單");
   if (!sectionSheet) {
     sectionSheet = ss.insertSheet("噗文清單");
-    sectionSheet.appendRow(["看板編號", "噗文編號", "噗文內容", "噗文類型", "圖片網址", "建立時間", "排序"]);
-    sectionSheet.getRange(1, 1, 1, 7).setFontWeight("bold").setBackground("#74b9ff");
+    sectionSheet.appendRow(["看板編號", "噗文編號", "噗文內容", "噗文類型", "圖片網址", "建立時間", "排序", "連結網址"]);
+    sectionSheet.getRange(1, 1, 1, 8).setFontWeight("bold").setBackground("#74b9ff");
   }
   
   // 3. 回應清單
@@ -860,7 +887,8 @@ function saveBoardData(data) {
         section.type || "text",
         section.imageUrl || "",
         section.createdAt || nowStr,
-        secIndex
+        secIndex,
+        section.linkUrl || ""
       ]);
       
       if (section.posts && section.posts.length > 0) {
@@ -924,6 +952,7 @@ function readBoardData(shareId) {
         imageUrl: sectionRows[j][4],
         createdAt: sectionRows[j][5],
         order: sectionRows[j][6],
+        linkUrl: sectionRows[j][7] || "",
         posts: []
       };
       sections.push(sec);
@@ -965,7 +994,89 @@ function readBoardData(shareId) {
       sections: sections
     }
   };
-}</textarea>
+}
+
+// 取得已儲存看板列表 (依時間倒序)
+function listBoardsData() {
+  try {
+    var sheets = initSheets();
+    var boardRows = sheets.boardSheet.getDataRange().getValues();
+    var list = [];
+    
+    for (var i = 1; i < boardRows.length; i++) {
+      list.push({
+        id: boardRows[i][0],
+        title: boardRows[i][1],
+        backgroundUrl: boardRows[i][2],
+        time: boardRows[i][3]
+      });
+    }
+    
+    list.sort(function(a, b) {
+      var timeA = a.time ? new Date(a.time).getTime() : 0;
+      var timeB = b.time ? new Date(b.time).getTime() : 0;
+      return timeB - timeA;
+    });
+    
+    return {
+      status: "success",
+      data: list
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      message: error.toString()
+    };
+  }
+}
+
+// 刪除雲端看板資料
+function deleteBoardData(shareId) {
+  try {
+    var sheets = initSheets();
+    
+    // 1. 取得該看板的所有噗文編號，以便後續刪除回應
+    var sectionRows = sheets.sectionSheet.getDataRange().getValues();
+    var sectionIds = [];
+    for (var j = sectionRows.length - 1; j >= 1; j--) {
+      if (sectionRows[j][0] == shareId) {
+        sectionIds.push(sectionRows[j][1]); // 記錄噗文編號
+        sheets.sectionSheet.deleteRow(j + 1); // 刪除噗文列
+      }
+    }
+    
+    // 2. 刪除回應清單中對應的那些回應
+    if (sectionIds.length > 0) {
+      var postRows = sheets.postSheet.getDataRange().getValues();
+      for (var k = postRows.length - 1; k >= 1; k--) {
+        var secId = postRows[k][0];
+        if (sectionIds.indexOf(secId) > -1) {
+          sheets.postSheet.deleteRow(k + 1); // 刪除回應列
+        }
+      }
+    }
+    
+    // 3. 刪除看板清單中的看板主列
+    var boardRows = sheets.boardSheet.getDataRange().getValues();
+    var deleted = false;
+    for (var i = boardRows.length - 1; i >= 1; i--) {
+      if (boardRows[i][0] == shareId) {
+        sheets.boardSheet.deleteRow(i + 1);
+        deleted = true;
+        break; // 看板ID是唯一的
+      }
+    }
+    
+    if (deleted) {
+      return { status: "success", message: "雲端看板資料已成功刪除" };
+    } else {
+      return { status: "error", message: "找不到該看板編號" };
+    }
+  } catch (error) {
+    return { status: "error", message: error.toString() };
+  }
+}
+</textarea>
                 </div>
             </div>
         </div>
@@ -982,48 +1093,181 @@ function readBoardData(shareId) {
         </div>
     </div>
 
+    <!-- 歡迎與啟動視窗 (大廳) -->
+    <div id="welcome-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div class="modal-content bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 relative h-[85vh] flex flex-col">
+            <!-- 標題與簡介 -->
+            <div class="text-center pb-4 border-b border-gray-100 flex-shrink-0">
+                <h1 class="text-3xl font-extrabold text-orange-600 mb-2 font-theme-title">阿剛老師的免費文字牆回應工具</h1>
+                <p class="text-xs text-gray-500">基於 Firebase 與 Google 試算表 (GAS) 構建的即時、免費用課堂互動看板</p>
+            </div>
+            
+            <!-- 快速操作區 (開新看板) -->
+            <div class="my-4 flex justify-between items-center gap-4 p-4 bg-orange-50 border border-orange-200 rounded-lg flex-shrink-0">
+                <div>
+                    <h3 class="font-bold text-orange-800 text-sm">建立全新即時互動看板</h3>
+                    <p class="text-[11px] text-orange-600 mt-0.5">自動生成隨機識別碼，立即啟動您的專屬課堂互動牆</p>
+                </div>
+                <button id="welcome-new-wall-btn" class="theme-button bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-5 rounded-lg text-xs transition-all shadow-md flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                    🆕 建立全新互動看板
+                </button>
+            </div>
+
+            <!-- 看板來源切換分頁 -->
+            <div class="flex border-b border-gray-200 mb-3 flex-shrink-0 gap-1.5">
+                <button id="welcome-tab-local" class="py-2 px-3 font-bold text-xs border-b-2 border-orange-500 text-orange-600 focus:outline-none flex-1 text-center transition-all">
+                    💾 本地歷史紀錄
+                </button>
+                <button id="welcome-tab-firebase" class="py-2 px-3 font-bold text-xs border-b-2 border-transparent text-gray-500 hover:text-orange-500 focus:outline-none flex-1 text-center transition-all">
+                    🔥 Firebase 雲端看板
+                </button>
+                <button id="welcome-tab-gas" class="py-2 px-3 font-bold text-xs border-b-2 border-transparent text-gray-500 hover:text-orange-500 focus:outline-none flex-1 text-center transition-all">
+                    📊 GAS 試算表分享存檔
+                </button>
+            </div>
+
+            <!-- 列表容器 -->
+            <div class="flex-grow overflow-y-auto pr-2 min-h-0">
+                <!-- 1. 本地歷史紀錄 -->
+                <div id="welcome-list-local" class="space-y-2">
+                    <!-- 動態渲染 -->
+                </div>
+                
+                <!-- 2. Firebase 雲端看板 -->
+                <div id="welcome-list-firebase" class="space-y-2 hidden">
+                    <div id="welcome-firebase-loading" class="text-center py-8 text-gray-500">
+                        <svg class="w-6 h-6 animate-spin mx-auto text-orange-500 mb-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        正在讀取 Firebase 雲端看板清單...
+                    </div>
+                    <div id="welcome-firebase-unconfigured" class="text-center py-6 bg-red-50 border border-red-200 rounded-lg p-5 hidden">
+                        <p class="font-bold text-red-800 mb-1 text-sm">⚠️ Firebase 未設定</p>
+                        <p class="text-xs text-red-600 mb-3">無法讀取雲端看板，請先點擊下方按鈕前往「🔥 Firebase 互動設定」完成設定。</p>
+                        <button id="welcome-go-firebase-config-btn" class="theme-button bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-4 rounded-lg text-xs transition-all shadow-sm">
+                            前往設定 Firebase
+                        </button>
+                    </div>
+                    <div id="welcome-firebase-container" class="space-y-2">
+                        <!-- 動態渲染 -->
+                    </div>
+                </div>
+                
+                <!-- 3. GAS 試算表唯讀分享存檔 -->
+                <div id="welcome-list-gas" class="space-y-2 hidden">
+                    <div class="flex flex-wrap items-center justify-between gap-2 p-3 bg-blue-50 rounded-lg border border-blue-200 mb-3">
+                        <div class="text-xs text-blue-800">
+                             <p class="font-bold flex items-center gap-1.5">
+                                 <span class="relative flex h-2 w-2">
+                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                     <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                                 </span>
+                                 同步雲端試算表看板
+                             </p>
+                             <p class="text-[10px] text-gray-500">從設定的 GAS 試算表載入所有分享存檔</p>
+                        </div>
+                        <button id="welcome-sync-gas-btn" class="theme-button bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-all flex items-center gap-1.5 shadow-sm">
+                            <svg class="w-3.5 h-3.5 inline-block welcome-sync-gas-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+                            同步雲端看板
+                        </button>
+                    </div>
+                    <div id="welcome-gas-container" class="space-y-2">
+                        <!-- 動態渲染 -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 底部提示 -->
+            <div class="pt-4 border-t border-gray-100 flex justify-between items-center flex-shrink-0">
+                <button id="welcome-help-btn" class="text-xs font-bold text-gray-500 hover:text-orange-500 flex items-center gap-1">
+                    ❓ 系統設定與說明
+                </button>
+                <button id="welcome-close-btn" class="theme-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1.5 px-4 rounded-lg text-xs transition-all hidden">
+                    關閉
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- 新增：開啟舊檔視窗 -->
     <div id="open-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
-        <div class="modal-content bg-white w-full max-w-2xl rounded-lg p-6 relative h-[70vh] flex flex-col">
-            <button id="close-open-modal-btn" class="absolute top-2 right-2 bg-gray-200 text-gray-700 w-8 h-8 rounded-full font-bold text-lg">&times;</button>
-            <h2 class="font-theme-title text-2xl text-center mb-2 text-gray-800 flex-shrink-0">開啟舊檔</h2>
+        <div class="modal-content bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 relative h-[80vh] flex flex-col">
+            <button id="close-open-modal-btn" class="absolute top-2 right-2 bg-gray-200 hover:bg-gray-300 text-gray-700 w-8 h-8 rounded-full font-bold text-lg transition-all">&times;</button>
+            <h2 class="font-theme-title text-2xl text-center mb-3 text-gray-800 flex-shrink-0">開啟舊檔</h2>
             
-            <!-- Tabs 切換按鈕 -->
-            <div class="flex border-b border-gray-200 mb-4 flex-shrink-0">
-                <button id="tab-open-interactive" class="py-2 px-4 font-bold text-sm border-b-2 border-blue-500 text-blue-600 focus:outline-none transition-all">
-                    Firebase 互動看板
+            <!-- 看板來源切換分頁 -->
+            <div class="flex border-b border-gray-200 mb-4 flex-shrink-0 gap-1.5">
+                <button id="tab-open-local" class="py-2 px-3 font-bold text-xs border-b-2 border-orange-500 text-orange-600 focus:outline-none flex-1 text-center transition-all">
+                    💾 本地歷史紀錄
                 </button>
-                <button id="tab-open-readonly" class="py-2 px-4 font-bold text-sm border-b-2 border-transparent text-gray-500 hover:text-gray-700 focus:outline-none transition-all">
-                    GAS 唯讀分享連結
+                <button id="tab-open-firebase" class="py-2 px-3 font-bold text-xs border-b-2 border-transparent text-gray-500 hover:text-orange-500 focus:outline-none flex-1 text-center transition-all">
+                    🔥 Firebase 雲端看板
+                </button>
+                <button id="tab-open-gas" class="py-2 px-3 font-bold text-xs border-b-2 border-transparent text-gray-500 hover:text-orange-500 focus:outline-none flex-1 text-center transition-all">
+                    📊 GAS 試算表分享存檔
                 </button>
             </div>
             
-            <!-- Firebase 互動看板區塊 -->
-            <div id="open-interactive-container" class="flex flex-col flex-grow overflow-hidden">
-                <!-- 一鍵清空控制列 -->
-                <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-200 flex-shrink-0">
-                    <span class="text-xs text-gray-500 font-bold">本機歷史互動看板清單：</span>
-                    <button id="clear-all-cloud-btn" class="theme-button bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-all flex items-center gap-1 shadow-sm">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                        一鍵清空雲端資料
-                    </button>
+            <!-- 列表容器 -->
+            <div class="flex-grow overflow-y-auto pr-2 min-h-0">
+                <!-- 1. 本地歷史紀錄區塊 -->
+                <div id="open-local-container" class="space-y-3">
+                    <!-- 一鍵清空控制列 -->
+                    <div class="flex justify-between items-center mb-2 pb-2 border-b border-gray-200">
+                        <span class="text-xs text-gray-500 font-bold">本機歷史互動看板清單：</span>
+                        <button id="clear-all-cloud-btn" class="theme-button bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-all flex items-center gap-1 shadow-sm">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            一鍵清空雲端資料
+                        </button>
+                    </div>
+                    <div id="archive-list-container" class="space-y-2 text-gray-800">
+                        <!-- 存檔列表將會動態插入此處 -->
+                    </div>
                 </div>
-                <div id="archive-list-container" class="overflow-y-auto pr-2 text-gray-800 flex-grow">
-                    <!-- 存檔列表將會動態插入此處 -->
+                
+                <!-- 2. Firebase 雲端看板區塊 -->
+                <div id="open-firebase-container" class="space-y-3 hidden">
+                    <div id="open-firebase-loading" class="text-center py-8 text-gray-500">
+                        <svg class="w-6 h-6 animate-spin mx-auto text-orange-500 mb-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        正在讀取 Firebase 雲端看板清單...
+                    </div>
+                    <div id="open-firebase-unconfigured" class="text-center py-6 bg-red-50 border border-red-200 rounded-lg p-5 hidden">
+                        <p class="font-bold text-red-800 mb-1 text-sm">⚠️ Firebase 未設定</p>
+                        <p class="text-xs text-red-600 mb-3">無法讀取雲端看板，請先點擊右上角「❓」前往「🔥 Firebase 互動設定」完成設定。</p>
+                    </div>
+                    <div id="open-firebase-list-container" class="space-y-2">
+                        <!-- 動態渲染 -->
+                    </div>
                 </div>
-            </div>
-            
-            <!-- GAS 唯讀分享連結區塊 -->
-            <div id="open-readonly-container" class="flex flex-col flex-grow overflow-hidden hidden">
-                <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-200 flex-shrink-0">
-                    <span class="text-xs text-gray-500 font-bold">本機產生的唯讀分享連結歷史清單：</span>
-                    <button id="clear-all-readonly-btn" class="theme-button bg-gray-500 hover:bg-gray-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-all flex items-center gap-1 shadow-sm">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                        清空本機分享紀錄
-                    </button>
-                </div>
-                <div id="readonly-list-container" class="overflow-y-auto pr-2 text-gray-800 flex-grow">
-                    <!-- 唯讀分享清單將會動態插入此處 -->
+                
+                <!-- 3. GAS 試算表唯讀分享存檔區塊 -->
+                <div id="open-gas-container" class="space-y-3 hidden">
+                    <!-- 雲端同步控制列 -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 p-3 bg-blue-50 rounded-lg border border-blue-200 mb-2">
+                        <div class="text-xs text-blue-800">
+                             <p class="font-bold flex items-center gap-1.5">
+                                 <span class="relative flex h-2 w-2" id="sync-gas-dot">
+                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                     <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                                 </span>
+                                 雲端同步試算表看板
+                             </p>
+                             <p class="text-[10px] text-gray-500">從設定的 GAS 試算表載入所有分享存檔</p>
+                        </div>
+                        <button id="sync-gas-boards-btn" class="theme-button bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-all flex items-center gap-1.5 shadow-sm">
+                            <svg id="sync-gas-icon" class="w-3.5 h-3.5 inline-block" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+                            同步雲端看板
+                        </button>
+                    </div>
+                    <div class="flex justify-between items-center mb-2 pb-2 border-b border-gray-200">
+                        <span class="text-xs text-gray-500 font-bold">已載入的唯讀分享看板歷史清單：</span>
+                        <button id="clear-all-readonly-btn" class="theme-button bg-gray-500 hover:bg-gray-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-all flex items-center gap-1 shadow-sm">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            清空本機分享紀錄
+                        </button>
+                    </div>
+                    <div id="readonly-list-container" class="space-y-2 text-gray-800">
+                        <!-- 唯讀分享清單將會動態插入此處 -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -1082,9 +1326,11 @@ function readBoardData(shareId) {
             <h2 class="font-theme-title text-2xl text-center mb-4 text-gray-800">分享看板至 GAS 試算表</h2>
             <div class="space-y-4 text-gray-800">
                 <div>
-                    <label for="gas-url-input" class="block font-bold mb-1">GAS 網頁應用程式網址 (Web App URL)</label>
-                    <input type="url" id="gas-url-input" class="w-full p-2 border border-gray-300 rounded-md text-sm" placeholder="https://script.google.com/macros/s/.../exec">
-                    <p class="text-xs text-gray-500 mt-1">請貼上您在 Google 試算表中部署的 GAS 網頁應用程式網址。點擊右上角「❓」有完整設定教學。</p>
+                    <label class="block font-bold mb-1">目標 GAS 轉存試算表網址：</label>
+                    <div id="share-gas-url-display" class="p-3 bg-gray-50 border border-gray-200 rounded-md text-xs font-mono break-all text-gray-600">
+                        <!-- 動態帶入 -->
+                    </div>
+                    <p class="text-[10px] text-gray-500 mt-1">此網址目前於右上角「❓ 系統設定與說明」之 GAS 分享設定中進行管理。</p>
                 </div>
                 <div id="share-action-container" class="text-center pt-2">
                     <button id="submit-share-btn" class="theme-button bg-orange-500 hover:bg-orange-600 text-white py-2 px-8 rounded-lg font-bold w-full">產生唯讀分享連結</button>
@@ -1147,6 +1393,13 @@ function readBoardData(shareId) {
             query, orderBy, where, onSnapshot, serverTimestamp, increment, writeBatch
         } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
         
+        // 全域錯誤監聽器，方便在沒有瀏覽器開發者工具的環境中調試
+        window.onerror = function(message, source, lineno, colno, error) {
+            alert("執行期錯誤: " + message + "\n來源: " + source + "\n行號: " + lineno + "\n錯誤對象: " + (error ? error.stack : ''));
+        };
+        window.addEventListener('unhandledrejection', function (event) {
+            alert("未處理的 Promise 拒絕: " + event.reason);
+        });
         // ===================================================================================
         // ==  系統核心設定區 (方便一般使用者手動修改)
         // ===================================================================================
@@ -1275,7 +1528,7 @@ function readBoardData(shareId) {
         const cloneBoardBtn = document.getElementById('clone-board-btn');
         const shareModal = document.getElementById('share-modal');
         const closeShareModalBtn = document.getElementById('close-share-modal-btn');
-        const gasUrlInput = document.getElementById('gas-url-input');
+        const shareGasUrlDisplay = document.getElementById('share-gas-url-display');
         const submitShareBtn = document.getElementById('submit-share-btn');
         const shareResultContainer = document.getElementById('share-result-container');
         const shareLinkInput = document.getElementById('share-link-input');
@@ -1299,11 +1552,13 @@ function readBoardData(shareId) {
         const webFirebaseStatus = document.getElementById('web-firebase-status');
         const clearAllCloudBtn = document.getElementById('clear-all-cloud-btn');
         
-        // 唯讀歷史清單相關 DOM 元素
-        const tabOpenInteractive = document.getElementById('tab-open-interactive');
-        const tabOpenReadonly = document.getElementById('tab-open-readonly');
-        const openInteractiveContainer = document.getElementById('open-interactive-container');
-        const openReadonlyContainer = document.getElementById('open-readonly-container');
+        // 開啟舊檔相關 DOM 元素
+        const tabOpenLocal = document.getElementById('tab-open-local');
+        const tabOpenFirebase = document.getElementById('tab-open-firebase');
+        const tabOpenGas = document.getElementById('tab-open-gas');
+        const openLocalContainer = document.getElementById('open-local-container');
+        const openFirebaseContainer = document.getElementById('open-firebase-container');
+        const openGasContainer = document.getElementById('open-gas-container');
         const readonlyListContainer = document.getElementById('readonly-list-container');
         const clearAllReadonlyBtn = document.getElementById('clear-all-readonly-btn');
 
@@ -1556,6 +1811,7 @@ function readBoardData(shareId) {
                             title: sec.title || '',
                             type: sec.type || 'text',
                             imageUrl: sec.imageUrl || null,
+                            linkUrl: sec.linkUrl || null,
                             createdAt: serverTimestamp(),
                             order: i
                         });
@@ -1628,6 +1884,7 @@ function readBoardData(shareId) {
                                     title: sec.title || '',
                                     type: sec.type || 'text',
                                     imageUrl: sec.imageUrl || null,
+                                    linkUrl: sec.linkUrl || null,
                                     createdAt: serverTimestamp(),
                                     order: i
                                 });
@@ -1707,15 +1964,35 @@ function readBoardData(shareId) {
 
         // 初始化
         const init = () => {
+            // 先行綁定所有事件監聽器，確保所有 UI 按鈕（包含警示窗、設定說明視窗等）皆可正常點擊運作
+            setupEventListeners();
+
             // 處理 URL 參數以自動跳轉看板
             if (!boardParam && !shareIdParam) {
-                const lastBoardId = localStorage.getItem('my_plurk_boards_last');
-                const baseUrl = window.location.href.split('?')[0];
-                if (lastBoardId) {
-                    window.location.href = `${baseUrl}?board=${lastBoardId}`;
-                } else {
-                    window.location.href = `${baseUrl}?board=${generateBoardId()}`;
+                // 檢查 Firebase 是否設定
+                if (firebaseConfig.apiKey === "YOUR_API_KEY" || firebaseConfig.projectId === "YOUR_PROJECT_ID" || firebaseConfig.apiKey.includes("你的firebase")) {
+                    showAlert('偵測到您尚未設定 Firebase 互動設定！\n系統已自動為您開啟設定視窗，請依照說明完成設定以啟用完整功能。', '請先設定 Firebase');
+                    helpModal.classList.remove('hidden');
+                    switchHelpTab('firebase');
+                    return;
                 }
+                
+                try {
+                    const app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    auth = getAuth(app);
+                    updateConnectionStatus();
+                    
+                    signInAnonymously(auth).catch(error => {
+                        console.error("匿名登入Lobby失敗:", error);
+                    });
+                } catch (e) {
+                    console.error("Lobby Firebase 初始化失敗:", e);
+                }
+                
+                // 顯示歡迎視窗 (Lobby 介面)
+                openWelcomeModal();
+                updateConnectionStatus();
                 return;
             }
             
@@ -1724,7 +2001,6 @@ function readBoardData(shareId) {
                 localStorage.setItem('my_plurk_boards_last', boardParam);
             }
 
-            setupEventListeners();
             applyModeRestrictions();
             loadLikedPostsFromLocal();
             
@@ -2063,6 +2339,130 @@ function readBoardData(shareId) {
                 });
             });
 
+            // --- Web 介面 GAS URL 設定與監聽 ---
+            const savedGasUrlLocal = localStorage.getItem('my_plurk_boards_gas_url') || defaultGasUrl || '';
+            const webGasUrlInput = document.getElementById('web-gasurl-input');
+            const saveWebGasUrlBtn = document.getElementById('save-web-gasurl-btn');
+            const clearWebGasUrlBtn = document.getElementById('clear-web-gasurl-btn');
+            const webGasUrlStatus = document.getElementById('web-gasurl-status');
+            
+            if (webGasUrlInput) {
+                webGasUrlInput.value = savedGasUrlLocal;
+            }
+            
+            if (saveWebGasUrlBtn && webGasUrlInput) {
+                saveWebGasUrlBtn.addEventListener('click', () => {
+                    const gasUrl = webGasUrlInput.value.trim();
+                    if (!gasUrl) {
+                        showAlert('請先輸入 Google Apps Script 網頁應用程式網址！');
+                        return;
+                    }
+                    if (!gasUrl.startsWith('https://script.google.com/')) {
+                        showAlert('請輸入正確的 Google Apps Script 網址！');
+                        return;
+                    }
+                    localStorage.setItem('my_plurk_boards_gas_url', gasUrl);
+                    if (webGasUrlStatus) {
+                        webGasUrlStatus.classList.remove('hidden');
+                    }
+                    saveWebGasUrlBtn.disabled = true;
+                    updateConnectionStatus(); // 更新狀態指示
+                    showAlert('GAS 網址設定已儲存，網頁即將重載！');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                });
+            }
+            
+            if (clearWebGasUrlBtn && webGasUrlInput) {
+                clearWebGasUrlBtn.addEventListener('click', () => {
+                    showConfirm('確定要清除已儲存的本機 GAS 網址設定嗎？清除後將會恢復使用 HTML 內置的預設網址。', () => {
+                        localStorage.removeItem('my_plurk_boards_gas_url');
+                        webGasUrlInput.value = defaultGasUrl || '';
+                        updateConnectionStatus();
+                        showAlert('已清除本機 GAS 設定，網頁即將重新整理！');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    });
+                });
+            }
+
+            // 同步雲端看板按鈕事件
+            const syncGasBoardsBtn = document.getElementById('sync-gas-boards-btn');
+            if (syncGasBoardsBtn) {
+                syncGasBoardsBtn.addEventListener('click', () => {
+                    syncGasBoards(true);
+                });
+            }
+
+            // --- 歡迎視窗與大廳 Lobby 事件監聽 ---
+            const welcomeNewWallBtn = document.getElementById('welcome-new-wall-btn');
+            const welcomeCloseBtn = document.getElementById('welcome-close-btn');
+            const welcomeHelpBtn = document.getElementById('welcome-help-btn');
+            const welcomeGoFirebaseBtn = document.getElementById('welcome-go-firebase-config-btn');
+            const welcomeSyncGasBtn = document.getElementById('welcome-sync-gas-btn');
+            
+            const welcomeTabLocal = document.getElementById('welcome-tab-local');
+            const welcomeTabFirebase = document.getElementById('welcome-tab-firebase');
+            const welcomeTabGas = document.getElementById('welcome-tab-gas');
+            
+            if (welcomeNewWallBtn) {
+                welcomeNewWallBtn.addEventListener('click', () => {
+                    const newId = generateBoardId();
+                    const baseUrl = window.location.href.split('?')[0];
+                    window.location.href = `${baseUrl}?board=${newId}`;
+                });
+            }
+            
+            if (welcomeCloseBtn) {
+                welcomeCloseBtn.addEventListener('click', () => {
+                    const welcomeModal = document.getElementById('welcome-modal');
+                    if (welcomeModal) welcomeModal.classList.add('hidden');
+                });
+            }
+            
+            if (welcomeHelpBtn) {
+                welcomeHelpBtn.addEventListener('click', () => {
+                    const welcomeModal = document.getElementById('welcome-modal');
+                    if (welcomeModal) welcomeModal.classList.add('hidden');
+                    helpModal.classList.remove('hidden');
+                    switchHelpTab('firebase');
+                });
+            }
+            
+            if (welcomeGoFirebaseBtn) {
+                welcomeGoFirebaseBtn.addEventListener('click', () => {
+                    const welcomeModal = document.getElementById('welcome-modal');
+                    if (welcomeModal) welcomeModal.classList.add('hidden');
+                    helpModal.classList.remove('hidden');
+                    switchHelpTab('firebase');
+                });
+            }
+            
+            if (welcomeSyncGasBtn) {
+                welcomeSyncGasBtn.addEventListener('click', async () => {
+                    const syncIcon = welcomeSyncGasBtn.querySelector('.welcome-sync-gas-icon');
+                    if (syncIcon) syncIcon.classList.add('animate-spin');
+                    welcomeSyncGasBtn.disabled = true;
+                    
+                    await syncGasBoards(true);
+                    
+                    if (syncIcon) syncIcon.classList.remove('animate-spin');
+                    welcomeSyncGasBtn.disabled = false;
+                });
+            }
+            
+            if (welcomeTabLocal) {
+                welcomeTabLocal.addEventListener('click', () => switchWelcomeTab('local'));
+            }
+            if (welcomeTabFirebase) {
+                welcomeTabFirebase.addEventListener('click', () => switchWelcomeTab('firebase'));
+            }
+            if (welcomeTabGas) {
+                welcomeTabGas.addEventListener('click', () => switchWelcomeTab('gas'));
+            }
+
             alertOkBtn.addEventListener('click', () => alertModal.classList.add('hidden'));
 
             mainTitleInput.addEventListener('blur', async (e) => {
@@ -2116,9 +2516,16 @@ function readBoardData(shareId) {
             dropZone.addEventListener('drop', handleImageDrop);
 
             helpBtn.addEventListener('click', () => helpModal.classList.remove('hidden'));
-            closeHelpModalBtn.addEventListener('click', () => helpModal.classList.add('hidden'));
+            const closeHelpModal = () => {
+                helpModal.classList.add('hidden');
+                // 如果沒有 board 且沒有 shareId (大廳模式)，關閉說明後重新開啟歡迎大廳
+                if (!boardParam && !shareIdParam) {
+                    openWelcomeModal();
+                }
+            };
+            closeHelpModalBtn.addEventListener('click', closeHelpModal);
             helpModal.addEventListener('click', (e) => {
-                if (e.target === helpModal) helpModal.classList.add('hidden');
+                if (e.target === helpModal) closeHelpModal();
             });
 
             // 短網址快取與二維碼控制
@@ -2455,28 +2862,37 @@ function readBoardData(shareId) {
                 });
             });
 
-            // 唯讀歷史紀錄 Tabs 切換事件
-            tabOpenInteractive.addEventListener('click', () => {
-                tabOpenInteractive.classList.add('border-blue-500', 'text-blue-600');
-                tabOpenInteractive.classList.remove('border-transparent', 'text-gray-500');
-                tabOpenReadonly.classList.remove('border-blue-500', 'text-blue-600');
-                tabOpenReadonly.classList.add('border-transparent', 'text-gray-500');
+            // 開啟舊檔 Tabs 切換事件與渲染
+            const switchOpenModalTab = (tab) => {
+                if (!tabOpenLocal || !tabOpenFirebase || !tabOpenGas || !openLocalContainer || !openFirebaseContainer || !openGasContainer) return;
                 
-                openInteractiveContainer.classList.remove('hidden');
-                openReadonlyContainer.classList.add('hidden');
-                renderMyBoardsHistoryList();
-            });
-            
-            tabOpenReadonly.addEventListener('click', () => {
-                tabOpenReadonly.classList.add('border-blue-500', 'text-blue-600');
-                tabOpenReadonly.classList.remove('border-transparent', 'text-gray-500');
-                tabOpenInteractive.classList.remove('border-blue-500', 'text-blue-600');
-                tabOpenInteractive.classList.add('border-transparent', 'text-gray-500');
+                // 重置所有 tab 樣式
+                [tabOpenLocal, tabOpenFirebase, tabOpenGas].forEach(el => {
+                    el.className = "py-2 px-3 font-bold text-xs border-b-2 border-transparent text-gray-500 hover:text-orange-500 focus:outline-none flex-1 text-center transition-all";
+                });
+                // 隱藏所有容器
+                [openLocalContainer, openFirebaseContainer, openGasContainer].forEach(el => el.classList.add('hidden'));
                 
-                openReadonlyContainer.classList.remove('hidden');
-                openInteractiveContainer.classList.add('hidden');
-                renderReadOnlyBoardsHistoryList();
-            });
+                if (tab === 'local') {
+                    tabOpenLocal.className = "py-2 px-3 font-bold text-xs border-b-2 border-orange-500 text-orange-600 focus:outline-none flex-1 text-center transition-all";
+                    openLocalContainer.classList.remove('hidden');
+                    renderMyBoardsHistoryList();
+                } else if (tab === 'firebase') {
+                    tabOpenFirebase.className = "py-2 px-3 font-bold text-xs border-b-2 border-orange-500 text-orange-600 focus:outline-none flex-1 text-center transition-all";
+                    openFirebaseContainer.classList.remove('hidden');
+                    renderOpenFirebaseList();
+                } else if (tab === 'gas') {
+                    tabOpenGas.className = "py-2 px-3 font-bold text-xs border-b-2 border-orange-500 text-orange-600 focus:outline-none flex-1 text-center transition-all";
+                    openGasContainer.classList.remove('hidden');
+                    renderReadOnlyBoardsHistoryList();
+                    // 默默同步一次雲端 GAS 試算表看板
+                    syncGasBoards(false);
+                }
+            };
+
+            if (tabOpenLocal) tabOpenLocal.addEventListener('click', () => switchOpenModalTab('local'));
+            if (tabOpenFirebase) tabOpenFirebase.addEventListener('click', () => switchOpenModalTab('firebase'));
+            if (tabOpenGas) tabOpenGas.addEventListener('click', () => switchOpenModalTab('gas'));
 
             // 一鍵清空唯讀分享本機紀錄
             clearAllReadonlyBtn.addEventListener('click', () => {
@@ -2584,19 +3000,20 @@ function readBoardData(shareId) {
             sectionEl.className = 'section-column';
             sectionEl.dataset.id = section.id;
 
+            const isAddPostHidden = isReadOnly ? 'hidden' : '';
+
             let sectionImageHtml = '';
             if (section.type === 'text_image' && section.imageUrl) {
                 sectionImageHtml = `<div class="mt-2 section-image-container"><img src="${section.imageUrl}" alt="" class="viewable-image w-full max-w-full h-auto object-cover rounded-md border border-gray-200 cursor-pointer"></div>`;
             }
 
-            // 渲染外部連結 HTML
+            // 渲染外部連結 HTML (僅呈現 URL 圖示，滑鼠移上去時顯示完整連結，避免文字溢出區塊)
             let sectionLinkHtml = '';
             if (section.linkUrl) {
                 sectionLinkHtml = `
                     <div class="mt-2 text-xs">
-                        <a href="${section.linkUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-blue-500 hover:text-blue-700 hover:underline font-bold bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded transition-all" onclick="event.stopPropagation();">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                            連結：${section.linkUrl}
+                        <a href="${section.linkUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center text-blue-500 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 w-8 h-8 rounded-full border border-blue-200 shadow-sm transition-all hover:scale-105" title="開啟連結：${section.linkUrl}" onclick="event.stopPropagation();">
+                            <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
                         </a>
                     </div>
                 `;
@@ -2625,11 +3042,11 @@ function readBoardData(shareId) {
                         ${sectionImageHtml}
                     </div>
                 </div>
-                <div class="section-add-post">
+                <div class="section-add-post ${isAddPostHidden}">
                     <button class="add-post-btn theme-button bg-white hover:bg-gray-100 w-full py-1 rounded-md text-sm text-gray-600 font-bold">+ 新增回應</button>
                 </div>
                 <div class="section-posts"></div>
-                <div class="section-footer p-2 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+                <div class="section-footer p-2 border-t border-gray-200 bg-gray-50 rounded-b-lg ${isAddPostHidden}">
                     <button class="add-post-btn-footer theme-button bg-white hover:bg-gray-100 w-full py-1 rounded-md text-sm text-gray-600 font-bold">+ 新增回應</button>
                 </div>
             `;
@@ -3124,23 +3541,491 @@ function readBoardData(shareId) {
             }
         };
 
+        // 同步/載入 GAS 雲端看板列表
+        const syncGasBoards = async (showNotification = true) => {
+            const savedGasUrl = localStorage.getItem('my_plurk_boards_gas_url') || defaultGasUrl || '';
+            if (!savedGasUrl) {
+                if (showNotification) {
+                    showAlert('您尚未設定 GAS 網址！\n請先前往右上角「❓ 系統設定與說明」 -> 「📊 GAS 試算表分享設定」完成設定。');
+                    openModalEl.classList.add('hidden');
+                    helpModal.classList.remove('hidden');
+                    switchHelpTab('gas');
+                }
+                return;
+            }
+
+            const syncBtn = document.getElementById('sync-gas-boards-btn');
+            const syncIcon = document.getElementById('sync-gas-icon');
+            
+            // 開始旋轉動畫與停用按鈕
+            if (syncIcon) syncIcon.classList.add('animate-spin');
+            if (syncBtn) {
+                syncBtn.disabled = true;
+                syncBtn.innerHTML = `
+                    <svg id="sync-gas-icon" class="w-3.5 h-3.5 inline-block animate-spin mr-1" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    同步中...
+                `;
+            }
+
+            try {
+                // 發送請求到 GAS 取得看板清單
+                const urlWithAction = `${savedGasUrl}${savedGasUrl.includes('?') ? '&' : '?'}action=list`;
+                const response = await fetch(urlWithAction, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP 錯誤! 狀態碼: ${response.status}`);
+                }
+
+                const result = await response.json();
+                if (result.status === 'success' && Array.isArray(result.data)) {
+                    let history = [];
+                    const localHistory = localStorage.getItem('my_plurk_boards_readonly_history');
+                    if (localHistory) {
+                        try {
+                            history = JSON.parse(localHistory);
+                        } catch (e) {}
+                    }
+
+                    // 合併雲端與本機
+                    result.data.forEach(cloudItem => {
+                        const existingIndex = history.findIndex(item => item.id === cloudItem.id);
+                        const timeMs = cloudItem.time ? new Date(cloudItem.time).getTime() : new Date().getTime();
+                        
+                        if (existingIndex > -1) {
+                            history[existingIndex].title = cloudItem.title || history[existingIndex].title;
+                            history[existingIndex].backgroundUrl = cloudItem.backgroundUrl || history[existingIndex].backgroundUrl;
+                            history[existingIndex].time = timeMs;
+                            history[existingIndex].gasUrl = savedGasUrl;
+                        } else {
+                            history.push({
+                                id: cloudItem.id,
+                                title: cloudItem.title || '未命名雲端看板',
+                                backgroundUrl: cloudItem.backgroundUrl || '',
+                                gasUrl: savedGasUrl,
+                                time: timeMs
+                            });
+                        }
+                    });
+
+                    // 排序
+                    history.sort((a, b) => b.time - a.time);
+                    
+                    localStorage.setItem('my_plurk_boards_readonly_history', JSON.stringify(history));
+                    renderReadOnlyBoardsHistoryList();
+                    renderWelcomeGasList();
+                    
+                    if (showNotification) {
+                        showAlert(`同步成功！已從雲端載入 ${result.data.length} 個看板紀錄。`);
+                    }
+                } else {
+                    throw new Error(result.message || '讀取看板清單失敗');
+                }
+            } catch (error) {
+                console.error("同步 GAS 看板清單出錯:", error);
+                if (showNotification) {
+                    showAlert(`同步失敗！無法從 GAS 載入資料。\n請確認您的 GAS 網址是否正確，且已經更新為支援 action=list 的新版本 Apps Script 程式碼。\n\n錯誤訊息: ${error.message}`, "同步失敗");
+                }
+            } finally {
+                // 恢復按鈕狀態
+                if (syncBtn) {
+                    syncBtn.disabled = false;
+                    syncBtn.innerHTML = `
+                        <svg id="sync-gas-icon" class="w-3.5 h-3.5 inline-block mr-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+                        同步雲端看板
+                    `;
+                }
+            }
+        };
+
+        // --- 新增：大廳 Lobby 歡迎視窗相關函數 ---
+        
+        // 開啟歡迎視窗
+        const openWelcomeModal = () => {
+            const welcomeModal = document.getElementById('welcome-modal');
+            if (welcomeModal) {
+                welcomeModal.classList.remove('hidden');
+                switchWelcomeTab('local');
+            }
+        };
+
+        // 切換歡迎視窗頁籤
+        const switchWelcomeTab = (tab) => {
+            const tabLocal = document.getElementById('welcome-tab-local');
+            const tabFirebase = document.getElementById('welcome-tab-firebase');
+            const tabGas = document.getElementById('welcome-tab-gas');
+            
+            const listLocal = document.getElementById('welcome-list-local');
+            const listFirebase = document.getElementById('welcome-list-firebase');
+            const listGas = document.getElementById('welcome-list-gas');
+            
+            if (!tabLocal || !tabFirebase || !tabGas || !listLocal || !listFirebase || !listGas) return;
+            
+            // 重置樣式
+            [tabLocal, tabFirebase, tabGas].forEach(el => {
+                el.className = "py-2 px-3 font-bold text-xs border-b-2 border-transparent text-gray-500 hover:text-orange-500 focus:outline-none flex-1 text-center transition-all";
+            });
+            [listLocal, listFirebase, listGas].forEach(el => el.classList.add('hidden'));
+            
+            if (tab === 'local') {
+                tabLocal.className = "py-2 px-3 font-bold text-xs border-b-2 border-orange-500 text-orange-600 focus:outline-none flex-1 text-center transition-all";
+                listLocal.classList.remove('hidden');
+                renderWelcomeLocalList();
+            } else if (tab === 'firebase') {
+                tabFirebase.className = "py-2 px-3 font-bold text-xs border-b-2 border-orange-500 text-orange-600 focus:outline-none flex-1 text-center transition-all";
+                listFirebase.classList.remove('hidden');
+                renderWelcomeFirebaseList();
+            } else if (tab === 'gas') {
+                tabGas.className = "py-2 px-3 font-bold text-xs border-b-2 border-orange-500 text-orange-600 focus:outline-none flex-1 text-center transition-all";
+                listGas.classList.remove('hidden');
+                renderWelcomeGasList();
+            }
+        };
+
+        // 渲染本地歷史紀錄
+        const renderWelcomeLocalList = () => {
+            const container = document.getElementById('welcome-list-local');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            let history = [];
+            const localHistory = localStorage.getItem('my_plurk_boards_history');
+            if (localHistory) {
+                try {
+                    history = JSON.parse(localHistory);
+                } catch(e) {}
+            }
+            
+            if (history.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-6 text-xs font-bold">目前沒有任何本地互動看板紀錄。</p>';
+                return;
+            }
+            
+            history.forEach(item => {
+                const savedDate = new Date(item.time).toLocaleString('zh-TW');
+                const baseUrl = window.location.href.split('?')[0];
+                const boardUrl = `${baseUrl}?board=${item.id}`;
+                
+                const itemEl = document.createElement('div');
+                itemEl.className = 'p-3 border border-gray-150 rounded-lg hover:bg-orange-50/30 transition-all flex items-center justify-between gap-4';
+                
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'min-w-0 flex-1';
+                infoDiv.innerHTML = `
+                    <p class="font-bold text-gray-900 truncate">${item.title}</p>
+                    <p class="text-xs text-gray-500">最後造訪：${savedDate} • 識別碼：${item.id}</p>
+                `;
+                
+                const openBtn = document.createElement('button');
+                openBtn.className = 'bg-orange-500 hover:bg-orange-600 text-white py-1.5 px-4 rounded-md text-xs font-bold shadow-sm transition-all';
+                openBtn.textContent = '開啟';
+                openBtn.addEventListener('click', () => {
+                    window.location.href = boardUrl;
+                });
+                
+                itemEl.appendChild(infoDiv);
+                itemEl.appendChild(openBtn);
+                container.appendChild(itemEl);
+            });
+        };
+
+        // 渲染 Firebase 雲端看板
+        const renderWelcomeFirebaseList = async () => {
+            const container = document.getElementById('welcome-firebase-container');
+            const loadingEl = document.getElementById('welcome-firebase-loading');
+            const unconfiguredEl = document.getElementById('welcome-firebase-unconfigured');
+            
+            if (!container || !loadingEl || !unconfiguredEl) return;
+            
+            if (!db) {
+                loadingEl.classList.add('hidden');
+                container.classList.add('hidden');
+                unconfiguredEl.classList.remove('hidden');
+                return;
+            }
+            
+            loadingEl.classList.remove('hidden');
+            unconfiguredEl.classList.add('hidden');
+            container.innerHTML = '';
+            container.classList.remove('hidden');
+            
+            try {
+                const boardsColl = collection(db, "boards");
+                const querySnapshot = await getDocs(boardsColl);
+                
+                loadingEl.classList.add('hidden');
+                
+                if (querySnapshot.empty) {
+                    container.innerHTML = '<p class="text-center text-gray-500 py-6 text-xs font-bold">Firebase 雲端資料庫中目前沒有任何看板資料。</p>';
+                    return;
+                }
+                
+                const boardsList = [];
+                querySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    boardsList.push({
+                        id: doc.id,
+                        title: data.mainTitle || '未命名互動看板'
+                    });
+                });
+                
+                boardsList.sort((a, b) => b.id.localeCompare(a.id));
+                
+                boardsList.forEach(item => {
+                    const baseUrl = window.location.href.split('?')[0];
+                    const boardUrl = `${baseUrl}?board=${item.id}`;
+                    
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'p-3 border border-gray-150 rounded-lg hover:bg-orange-50/30 transition-all flex items-center justify-between gap-4';
+                    
+                    const infoDiv = document.createElement('div');
+                    infoDiv.className = 'min-w-0 flex-1';
+                    infoDiv.innerHTML = `
+                        <p class="font-bold text-gray-900 truncate">${item.title}</p>
+                        <p class="text-xs text-gray-500">Firebase 雲端 • 看板識別碼：<span class="font-mono text-blue-600 font-bold">${item.id}</span></p>
+                    `;
+                    
+                    const openBtn = document.createElement('button');
+                    openBtn.className = 'bg-orange-500 hover:bg-orange-600 text-white py-1.5 px-4 rounded-md text-xs font-bold shadow-sm transition-all';
+                    openBtn.textContent = '開啟';
+                    openBtn.addEventListener('click', () => {
+                        window.location.href = boardUrl;
+                    });
+                    
+                    itemEl.appendChild(infoDiv);
+                    itemEl.appendChild(openBtn);
+                    container.appendChild(itemEl);
+                });
+            } catch (error) {
+                console.error("讀取 Firebase 雲端清單失敗:", error);
+                loadingEl.classList.add('hidden');
+                container.innerHTML = `<p class="text-center text-red-500 py-6 text-xs font-bold">無法讀取 Firebase 看板列表！<br>錯誤訊息: ${error.message}</p>`;
+            }
+        };
+
+        // 渲染開啟舊檔的 Firebase 雲端看板
+        const renderOpenFirebaseList = async () => {
+            const container = document.getElementById('open-firebase-list-container');
+            const loadingEl = document.getElementById('open-firebase-loading');
+            const unconfiguredEl = document.getElementById('open-firebase-unconfigured');
+            
+            if (!container || !loadingEl || !unconfiguredEl) return;
+            
+            if (!db) {
+                loadingEl.classList.add('hidden');
+                container.classList.add('hidden');
+                unconfiguredEl.classList.remove('hidden');
+                return;
+            }
+            
+            loadingEl.classList.remove('hidden');
+            unconfiguredEl.classList.add('hidden');
+            container.innerHTML = '';
+            container.classList.remove('hidden');
+            
+            try {
+                const boardsColl = collection(db, "boards");
+                const querySnapshot = await getDocs(boardsColl);
+                
+                loadingEl.classList.add('hidden');
+                
+                if (querySnapshot.empty) {
+                    container.innerHTML = '<p class="text-center text-gray-500 py-6 text-xs font-bold">Firebase 雲端資料庫中目前沒有任何看板資料。</p>';
+                    return;
+                }
+                
+                const boardsList = [];
+                querySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    boardsList.push({
+                        id: doc.id,
+                        title: data.mainTitle || '未命名互動看板'
+                    });
+                });
+                
+                boardsList.sort((a, b) => b.id.localeCompare(a.id));
+                
+                boardsList.forEach(item => {
+                    const baseUrl = window.location.href.split('?')[0];
+                    const boardUrl = `${baseUrl}?board=${item.id}`;
+                    const isCurrent = item.id === boardId && !isReadOnly;
+                    
+                    const itemEl = document.createElement('div');
+                    itemEl.className = `p-3 border border-gray-150 rounded-lg hover:bg-orange-50/30 transition-all flex items-center justify-between gap-4 ${isCurrent ? 'bg-orange-50/50 border-l-4 border-l-orange-500' : ''}`;
+                    
+                    const infoDiv = document.createElement('div');
+                    infoDiv.className = 'min-w-0 flex-1';
+                    infoDiv.innerHTML = `
+                        <p class="font-bold text-gray-900 truncate">${item.title} ${isCurrent ? '<span class="text-xs text-orange-600 bg-orange-100 px-2 py-0.5 rounded ml-2">當前使用中</span>' : ''}</p>
+                        <p class="text-xs text-gray-500">Firebase 雲端 • 看板識別碼：<span class="font-mono text-blue-600 font-bold">${item.id}</span></p>
+                    `;
+                    
+                    const btnGroup = document.createElement('div');
+                    btnGroup.className = 'flex gap-1.5 flex-shrink-0';
+                    
+                    const openBtn = document.createElement('button');
+                    openBtn.className = 'bg-orange-500 hover:bg-orange-600 text-white py-1.5 px-3 rounded-md text-xs font-bold shadow-sm transition-all';
+                    openBtn.textContent = '開啟';
+                    openBtn.addEventListener('click', () => {
+                        openModalEl.classList.add('hidden');
+                        window.location.href = boardUrl;
+                    });
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'bg-red-600 hover:bg-red-700 text-white py-1.5 px-3 rounded-md text-xs font-bold flex items-center gap-0.5 shadow-sm transition-all';
+                    deleteBtn.innerHTML = `
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        刪除雲端
+                    `;
+                    
+                    deleteBtn.addEventListener('click', () => {
+                        showConfirm(`⚠️ 警告：確定要徹底刪除 Firebase 雲端上【${item.title} (${item.id})】的全部看板資料嗎？\n\n此動作將無法還原，該看板的所有分區與貼文都將永久消失！`, async () => {
+                            showSyncStatus(true, false, '正在刪除雲端資料...');
+                            try {
+                                const success = await deleteFirebaseBoardData(item.id);
+                                if (success) {
+                                    // 同時嘗試從本機歷史紀錄中移除（如果有在裡面的話）
+                                    let hist = [];
+                                    const localHist = localStorage.getItem('my_plurk_boards_history');
+                                    if (localHist) {
+                                        try {
+                                            hist = JSON.parse(localHist);
+                                        } catch(e) {}
+                                    }
+                                    hist = hist.filter(h => h.id !== item.id);
+                                    localStorage.setItem('my_plurk_boards_history', JSON.stringify(hist));
+                                    
+                                    showSyncStatus(false, false, '雲端資料刪除成功！');
+                                    showAlert(`看板【${item.title}】的雲端資料已成功刪除。`, '刪除成功');
+                                    
+                                    // 如果刪除的是當前看板，重載網頁至無 board 參數之狀態
+                                    if (item.id === boardId && !isReadOnly) {
+                                        openModalEl.classList.add('hidden');
+                                        const baseUrl = window.location.href.split('?')[0];
+                                        window.location.href = baseUrl;
+                                    } else {
+                                        renderOpenFirebaseList();
+                                    }
+                                } else {
+                                    showSyncStatus(false, true, '刪除失敗');
+                                }
+                            } catch (err) {
+                                console.error(err);
+                                showSyncStatus(false, true, '刪除失敗');
+                                showAlert(`刪除雲端資料失敗：\n${err.message}`, '錯誤');
+                            }
+                        });
+                    });
+                    
+                    btnGroup.appendChild(openBtn);
+                    btnGroup.appendChild(deleteBtn);
+                    
+                    itemEl.appendChild(infoDiv);
+                    itemEl.appendChild(btnGroup);
+                    container.appendChild(itemEl);
+                });
+            } catch (error) {
+                console.error("讀取 Firebase 雲端清單失敗:", error);
+                loadingEl.classList.add('hidden');
+                container.innerHTML = `<p class="text-center text-red-500 py-6 text-xs font-bold">無法讀取 Firebase 看板列表！<br>錯誤訊息: ${error.message}</p>`;
+            }
+        };
+
+        // 渲染 GAS 試算表唯讀分享存檔
+        const renderWelcomeGasList = () => {
+            const container = document.getElementById('welcome-gas-container');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            let history = [];
+            const localHistory = localStorage.getItem('my_plurk_boards_readonly_history');
+            if (localHistory) {
+                try {
+                    history = JSON.parse(localHistory);
+                } catch(e) {}
+            }
+            
+            if (history.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-6 text-xs font-bold">目前沒有任何 GAS 試算表分享存檔紀錄。</p>';
+                return;
+            }
+            
+            history.forEach(item => {
+                const savedDate = new Date(item.time).toLocaleString('zh-TW');
+                const baseUrl = window.location.href.split('?')[0];
+                const encodedGasUrl = btoa(item.gasUrl);
+                const shareLink = `${baseUrl}?gasUrl=${encodedGasUrl}&shareId=${item.id}`;
+                
+                const itemEl = document.createElement('div');
+                itemEl.className = 'p-3 border border-gray-150 rounded-lg hover:bg-blue-50/30 transition-all flex flex-col gap-2';
+                
+                const mainRow = document.createElement('div');
+                mainRow.className = 'flex items-center justify-between gap-4';
+                
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'min-w-0 flex-1';
+                infoDiv.innerHTML = `
+                    <p class="font-bold text-gray-900 truncate">${item.title}</p>
+                    <p class="text-[10px] text-gray-400">分享時間：${savedDate} • 識別碼：${item.id}</p>
+                `;
+                
+                const btnGroup = document.createElement('div');
+                btnGroup.className = 'flex gap-2 flex-shrink-0';
+                
+                const openBtn = document.createElement('button');
+                openBtn.className = 'bg-blue-500 hover:bg-blue-600 text-white py-1 px-2.5 rounded text-xs font-bold transition-all';
+                openBtn.textContent = '開啟唯讀';
+                openBtn.addEventListener('click', () => {
+                    window.open(shareLink, '_blank');
+                });
+                
+                const cloneBtn = document.createElement('button');
+                cloneBtn.className = 'bg-orange-500 hover:bg-orange-600 text-white py-1 px-2.5 rounded text-xs font-bold transition-all';
+                cloneBtn.textContent = '複製此看板';
+                cloneBtn.addEventListener('click', () => {
+                    const welcomeModal = document.getElementById('welcome-modal');
+                    if (welcomeModal) welcomeModal.classList.add('hidden');
+                    cloneBoardFromGas(item.id, item.gasUrl);
+                });
+                
+                btnGroup.appendChild(openBtn);
+                btnGroup.appendChild(cloneBtn);
+                mainRow.appendChild(infoDiv);
+                mainRow.appendChild(btnGroup);
+                
+                itemEl.appendChild(mainRow);
+                container.appendChild(itemEl);
+            });
+        };
+
         // 開啟 GAS 分享視窗
         const openShareModal = () => {
+            const savedGasUrl = localStorage.getItem('my_plurk_boards_gas_url') || defaultGasUrl || '';
+            if (!savedGasUrl) {
+                showAlert('您尚未設定 GAS 網址！\n請先前往右上角「❓ 系統設定與說明」 -> 「📊 GAS 試算表分享設定」填寫並儲存網址。');
+                // 自動開啟 help modal 並切換到 gas tab
+                helpModal.classList.remove('hidden');
+                switchHelpTab('gas');
+                return;
+            }
+
             shareResultContainer.classList.add('hidden');
             document.getElementById('share-link-input').value = '';
             
-            // 載入 LocalStorage 中的 GAS Web App 網址
-            const savedGasUrl = localStorage.getItem('my_plurk_boards_gas_url') || defaultGasUrl || '';
-            gasUrlInput.value = savedGasUrl;
+            if (shareGasUrlDisplay) {
+                shareGasUrlDisplay.textContent = savedGasUrl;
+            }
             
             shareModal.classList.remove('hidden');
         };
 
         // 送出資料至 GAS 試算表
         const submitShareToGas = async () => {
-            const gasUrl = gasUrlInput.value.trim();
+            const gasUrl = localStorage.getItem('my_plurk_boards_gas_url') || defaultGasUrl || '';
             if (!gasUrl) {
-                showAlert('請先輸入 Google Apps Script 網頁應用程式網址！');
+                showAlert('請先設定 Google Apps Script 網頁應用程式網址！');
                 return;
             }
             if (!gasUrl.startsWith('https://script.google.com/')) {
@@ -3185,6 +4070,7 @@ function readBoardData(shareId) {
                         title: sec.title || '',
                         type: sec.type || 'text',
                         imageUrl: compressedSecImg || '',
+                        linkUrl: sec.linkUrl || '',
                         createdAt: sec.createdAt?.toDate?.() ? sec.createdAt.toDate().toISOString() : (sec.createdAt || new Date().toISOString()),
                         posts: cleanedPosts
                     });
@@ -3236,9 +4122,9 @@ function readBoardData(shareId) {
         // 開啟本機互動看板清單 (複用 open-modal UI)
         const openMyBoardsModal = () => {
             openModalEl.classList.remove('hidden');
-            // 預設點擊 Firebase 互動看板選項卡
-            if (tabOpenInteractive) {
-                tabOpenInteractive.click();
+            // 預設點擊本地歷史紀錄選項卡
+            if (tabOpenLocal) {
+                tabOpenLocal.click();
             } else {
                 renderMyBoardsHistoryList();
             }
@@ -3264,6 +4150,56 @@ function readBoardData(shareId) {
             if (history.length > 30) history = history.slice(0, 30);
             localStorage.setItem('my_plurk_boards_readonly_history', JSON.stringify(history));
         }
+
+        // 刪除雲端 GAS 試算表中的看板資料
+        const deleteCloudBoardFromGas = async (id, gasUrl) => {
+            if (!gasUrl) {
+                showAlert('無效的 GAS 網址，無法進行雲端刪除！');
+                return;
+            }
+            
+            showConfirm('確定要徹底從您的 Google 試算表中刪除此看板的所有資料嗎？\n此動作將一併刪除該看板的所有噗文與回應，且無法復原！', async () => {
+                showSyncStatus(true, false, '正在刪除雲端資料...');
+                
+                try {
+                    const urlWithAction = `${gasUrl}${gasUrl.includes('?') ? '&' : '?'}action=delete&shareId=${id}`;
+                    const response = await fetch(urlWithAction, {
+                        method: 'GET',
+                        mode: 'cors'
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP 錯誤! 狀態碼: ${response.status}`);
+                    }
+                    
+                    const result = await response.json();
+                    if (result.status === 'success') {
+                        // 1. 從本機快取列表中移除
+                        let history = [];
+                        const localHistory = localStorage.getItem('my_plurk_boards_readonly_history');
+                        if (localHistory) {
+                            try {
+                                history = JSON.parse(localHistory);
+                            } catch (e) {}
+                        }
+                        history = history.filter(item => item.id !== id);
+                        localStorage.setItem('my_plurk_boards_readonly_history', JSON.stringify(history));
+                        
+                        // 2. 重新渲染清單
+                        renderReadOnlyBoardsHistoryList();
+                        
+                        showSyncStatus(false, false, '刪除成功');
+                        showAlert('雲端看板資料已成功徹底刪除！');
+                    } else {
+                        throw new Error(result.message || '刪除失敗');
+                    }
+                } catch (error) {
+                    console.error("刪除雲端 GAS 看板失敗:", error);
+                    showAlert(`刪除失敗！無法從您的 GAS 試算表中刪除資料。\n請確認您的 GAS 專案已更新為支援 action=delete 的新版本，且運行狀態正常。\n\n錯誤訊息: ${error.message}`, "刪除失敗");
+                    showSyncStatus(false, true, '刪除失敗');
+                }
+            });
+        };
 
         // 渲染本機唯讀分享歷史紀錄列表
         const renderReadOnlyBoardsHistoryList = () => {
@@ -3303,7 +4239,8 @@ function readBoardData(shareId) {
                         </div>
                         <div class="flex gap-1.5 flex-shrink-0 flex-wrap justify-end">
                             <button class="open-readonly-board-btn theme-button bg-blue-500 hover:bg-blue-600 text-white py-1 px-2.5 rounded-md text-xs font-bold" data-url="${shareLink}">開啟</button>
-                            <button class="delete-readonly-board-btn theme-button bg-red-500 hover:bg-red-600 text-white py-1 px-2.5 rounded-md text-xs font-bold" data-id="${item.id}">移除紀錄</button>
+                            <button class="delete-readonly-board-btn theme-button bg-gray-500 hover:bg-gray-600 text-white py-1 px-2.5 rounded-md text-xs font-bold" data-id="${item.id}" title="僅從本機列表中移除此項目，不會刪除雲端資料">移除紀錄</button>
+                            <button class="delete-cloud-board-btn theme-button bg-red-600 hover:bg-red-700 text-white py-1 px-2.5 rounded-md text-xs font-bold" data-id="${item.id}" data-gasurl="${item.gasUrl}" title="徹底從您的 Google 試算表中刪除此看板的所有資料">🔥 刪除雲端資料</button>
                         </div>
                     </div>
                     <div class="flex gap-2 text-xs">
@@ -3319,7 +4256,7 @@ function readBoardData(shareId) {
                 btn.addEventListener('click', (e) => {
                     const url = e.target.dataset.url;
                     openModalEl.classList.add('hidden');
-                    window.location.href = url;
+                    window.open(url, '_blank');
                 });
             });
             
@@ -3355,6 +4292,16 @@ function readBoardData(shareId) {
                     const gasUrl = e.target.dataset.gasurl;
                     openModalEl.classList.add('hidden');
                     cloneBoardFromGas(id, gasUrl);
+                });
+            });
+
+            // 綁定刪除雲端 GAS 看板事件
+            readonlyListContainer.querySelectorAll('.delete-cloud-board-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // 為了防止點擊內部圖示或子元素時出錯，我們使用 currentTarget 獲取綁定事件的按鈕
+                    const id = e.currentTarget.dataset.id;
+                    const gasUrl = e.currentTarget.dataset.gasurl;
+                    deleteCloudBoardFromGas(id, gasUrl);
                 });
             });
         };
